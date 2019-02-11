@@ -83,9 +83,9 @@ public class PatternDesign {
      * 3.最终得到左右均有顺序的“无数个”数组
      * 我们可以看到，先选择的是中间的数据，其次是左侧的节点，最后才是右侧的节点，所以快速排序其实是
      * 基于中序遍历的一次排序。
-     * @param nums
-     * @param low
-     * @param high
+     * @param nums 待排序的数组
+     * @param low 左侧指针下标
+     * @param high 右侧指针下标
      */
     private static void quickSort(int[] nums,int low,int high) {
         if (nums == null || nums.length == 0) return;
