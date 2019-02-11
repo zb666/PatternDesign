@@ -16,13 +16,12 @@ public class PatternDesign {
         String start = "a";
         System.out.print("运行");
 
+        int nums[] = {7, 5, 2, 10, 4, 1, 8, 3, 6, 9};
+//        int[] bubbleArray = bubbleSort(nums);
+       quickSort(nums,0,nums.length-1);
 
-        int nums[] = {4, 5, 2, 10, 7, 1, 8, 3, 6, 9};
-        int[] bubbleArray = bubbleSort(nums);
-        quickSort(nums);
-        int[] bubbleSort = bubbleArray;
-        for (int i : bubbleSort) {
-            System.out.print(i);
+        for (int num : nums) {
+            System.out.print(" " + num);
         }
 
         //okhttp的添加时倒序的 我们这里没什么特别的要求正序即可
@@ -77,8 +76,59 @@ public class PatternDesign {
         System.out.print(list);
     }
 
-    private static int quickSort(int[] nums) {
-        return 0;
+    /**
+     * tips
+     * 1.寻找分割的基准点，将数组分成以基准点为切割线的两个部分(左侧的比基准点小），右侧的比基准点大
+     * 2.如法炮制，左右的数组均以此方式进行二次排序
+     * 3.最终得到左右均有顺序的“无数个”数组
+     * 我们可以看到，先选择的是中间的数据，其次是左侧的节点，最后才是右侧的节点，所以快速排序其实是
+     * 基于中序遍历的一次排序。
+     * @param nums
+     * @param low
+     * @param high
+     */
+    private static void quickSort(int[] nums,int low,int high) {
+        if (nums == null || nums.length == 0) return;
+        if (low>high) return;
+        //进行首次的分割
+        int privotPos = dividerPos(nums, low, nums.length-1);
+        //再次进行递归比较
+        //对于低字表进行递归
+        quickSort(nums,low,privotPos-1);
+        //对于高字表进行递归
+        quickSort(nums,privotPos+1,high);
+    }
+
+    /**
+     * 切割数组 分成以基准点为分割线的两半
+     *
+     * @param a
+     * @param low
+     * @param high
+     * @return
+     */
+    private static int dividerPos(int[] a, int low, int high) {
+        int privotKey = a[low];
+        while (low < high) {
+            //不断地从右边向左边进行扫描
+            while (a[high] > privotKey && high > low) {
+                high--;
+            }
+            //交换
+            swap(a, low, high);
+            //低位指针向右移动,直到遇到合数的数据
+            while (a[low] <privotKey && low < high) {
+                low++;
+            }
+            swap(a, low, high);
+        }
+        return low;
+    }
+
+    private static void swap(int[] a, int low, int high) {
+        int temp = a[low];
+        a[low] = a[high];
+        a[high] = temp;
     }
 
     private static int[] bubbleSort(int[] nums) {
