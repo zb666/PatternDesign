@@ -78,20 +78,27 @@ public class PatternDesign {
     }
 
     private static int quickSort(int[] nums) {
-
+        return 0;
     }
 
     private static int[] bubbleSort(int[] nums) {
         int length = nums.length;
         int temp;
+        int pos = 0;
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length - i - 1; j++) {
-                if (nums[j+1]>nums[j]) {
+                if (nums[j + 1] > nums[j]) {
+                    pos++;
                     temp = nums[j];
                     nums[j] = nums[j + 1];
                     nums[j + 1] = temp;
                 }
             }
+            if (pos == 0) {
+                //后面的顺序已经排完
+                return nums;
+            }
+            pos = 0;
         }
         return nums;
     }
